@@ -15,6 +15,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-static": "^2.0.3",
 		"@sveltejs/kit": "^1.20.4",
 		"@types/w3c-web-usb": "^1.0.9",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -34,8 +35,6 @@
 	"type": "module",
 	"dependencies": {
 		"buffer": "^6.0.3",
-		"canvg": "^4.0.1",
-		"receiptline": "^1.15.0",
-		"stream-browserify": "^3.0.0"
+		"receiptline": "^1.15.0"
 	}
 }
