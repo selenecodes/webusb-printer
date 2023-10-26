@@ -25,7 +25,7 @@
 <div class="flex flex-col gap-2 p-4">
 	<div class="flex gap-2">
 		<button on:click={setPrinter} class="border p-2 rounded">Request usb device</button>
-		<button on:click={() => printer?.print(text)} disabled={!!!printer} class="border p-2 rounded disabled:text-gray-500 disabled:cursor-not-allowed">
+		<button on:click={() => printer?.print(text)} disabled={!printer} class="border p-2 rounded disabled:text-gray-500 disabled:cursor-not-allowed">
 			Print
 		</button>
 	</div>
