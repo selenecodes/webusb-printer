@@ -1,7 +1,7 @@
 
 <script lang="ts">
-	import { EXAMPLE_RECEIPT_1 } from "./example-receipts";
-	import { Printer } from "./printer";
+	import { EXAMPLE_RECEIPT_1 } from "../lib/example-receipts";
+	import { Printer } from "../lib/printer";
 	let printer: Printer | undefined;
 	let text: string = EXAMPLE_RECEIPT_1;
 
