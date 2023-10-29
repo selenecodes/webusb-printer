@@ -22,7 +22,7 @@ For windows you'll need to install [Zadig](https://zadig.akeo.ie/) to overwrite 
 1. Run Zadig as administrator
 2. In the menubar select Options -> List all devices
 3. Select the Star printer
-4. Ensure the right dropdown menu shows WinUSB.
+4. Ensure the dropdown menu shows WinUSB.
 5. Click "Reinstall WCID Driver"
 
 ### ImportError
