@@ -7,12 +7,22 @@ const STAR_TSP143_PRODUCT_ID = 0x0003; // TSP143III
 export class Printer {
 	private printer: USBDevice | undefined;
 	private endpoints: Record<USBEndpoint['direction'], USBEndpoint> | undefined;
+	private opendrawer_cmd: string = '\x07';
 	private constructor() {}
 
-	public static async setup() {
+	/**
+	 * Sets up the printer
+	 * @description Sets up the printer by requesting a printer from the browser,
+	 * opening a connection to the printer, selecting the first configuration,
+	 * claiming the first interface and lastly it returns the endpoints of the first interface
+	 * @param opendrawer_cmd - The command to use when opening the cash drawer
+	 * @returns An instantiated printer
+	 */
+	public static async setup(opendrawer_cmd = '\x07') {
 		const printer = new Printer();
 		printer.printer = await Printer.getPrinter();
 		printer.endpoints = await Printer.getEndpoints(printer.printer);
+		printer.opendrawer_cmd = opendrawer_cmd;
 		return printer;
 	}
 
@@ -174,6 +184,20 @@ export class Printer {
 	private createPrintJob(png: string) {
 		const command = receiptline.transform(`{image:${png}}`, {
 			cutting: true,
+			command: 'stargraphic'
+		});
+
+		const binaryData = Buffer.from(command, 'binary');
+		this.printer.transferOut(this.endpoints.out.endpointNumber, binaryData);
+	}
+
+	/**
+	 * Opens the cash drawer
+	 *
+	 * @note I've only tested this with the Star TSP143III printer
+	 */
+	public openCashDrawer() {
+		const command = receiptline.transform(`{command:${this.opendrawer_cmd}}`, {
 			command: 'stargraphic'
 		});
 
