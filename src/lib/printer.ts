@@ -43,9 +43,9 @@ export class Printer {
 	): Promise<Record<USBEndpoint['direction'], USBEndpoint>> {
 		// Open the printer and select the first configuration
 		await printer.open();
-		console.log('printer-opened');
+		console.info('printer-opened');
 		await printer.selectConfiguration(1);
-		console.log('printer-configured');
+		console.info('printer-configured');
 
 		const interfaces = printer.configuration?.interfaces;
 		if (!interfaces) throw new Error('No interfaces found');
@@ -53,7 +53,7 @@ export class Printer {
 		// currently this implementation works fine though*
 		const firstInterface = interfaces[0];
 		await printer.claimInterface(firstInterface.interfaceNumber);
-		console.log('printer-interface-claimed');
+		console.info('printer-interface-claimed');
 		const endpoints = firstInterface.alternate.endpoints.reduce(
 			(endpoints, endpoint) => ({
 				...endpoints,
@@ -82,7 +82,7 @@ export class Printer {
 		});
 
 		if (!printer) throw new Error('No printer found');
-		console.log(printer);
+		console.info(printer);
 		return printer;
 	}
 
@@ -184,7 +184,9 @@ export class Printer {
 	private createPrintJob(png: string) {
 		const command = receiptline.transform(`{image:${png}}`, {
 			cutting: true,
-			command: 'stargraphic'
+			command: 'stargraphic',
+			threshold: 180,
+			gamma: 1,
 		});
 
 		const binaryData = Buffer.from(command, 'binary');
